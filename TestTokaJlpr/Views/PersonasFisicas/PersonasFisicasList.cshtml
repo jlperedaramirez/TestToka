@@ -1,0 +1,89 @@
+﻿@model IEnumerable<TestTokaJlpr.Models.PersonasFisicasModel>
+
+@{
+    ViewData["Title"] = "Listado de Personas Fisicas";
+}
+
+<h1>Listado de Personas Fisicas</h1>
+
+<p>
+    <a asp-action="PersonaFisicaAdd">Crear Persona Fisica</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApellidoPaterno)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApellidoMaterno)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RFC)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaNacimiento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaRegistro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaActualizacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Activo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUsuarioAdd)
+            </th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApellidoPaterno)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApellidoMaterno)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RFC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaNacimiento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaRegistro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaActualizacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Activo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUsuarioAdd)
+            </td>
+            <td>
+                <a asp-action="BuscarPersonaFisica" asp-route-id="@item.Id">Editar</a> |
+                @if (item.Activo)
+                {
+                    <a asp-action="BorrarPersona" asp-route-id="@item.Id" onclick="return confirm('¿Está seguro que desea borrar el registro?')">Borrar</a>   
+                } 
+                else
+                    {
+                        <a asp-action="ActivarPersona" asp-route-id="@item.Id" onclick="return confirm('¿Está seguro que desea activar el registro?')">Activar</a>         
+                    }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

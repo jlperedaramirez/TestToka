@@ -1,0 +1,142 @@
+﻿@using static TestTokaJlpr.Controllers.ListCustomersController
+@*@model IEnumerable<TestTokaJlpr.Models.CustomersModel>*@
+@model PaginadorGenerico<TestTokaJlpr.Models.CustomersModel>
+
+@{
+    ViewData["Title"] = "ListCustomers";
+}
+
+<h1>ListCustomers</h1>
+<div>
+    <a asp-action="ExportarExcel">Exportar a Excel</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                IdCliente
+            </th>
+            <th>
+                FechaRegistroEmpresa
+            </th>
+            <th>
+                RazonSocial
+            </th>
+            <th>
+                RFC
+            </th>
+            <th>
+                Sucursal
+            </th>
+            <th>
+                IdEmpleado
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Paterno
+            </th>
+            <th>
+                Materno
+            </th>
+            <th>
+                IdViaje
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Resultado) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaRegistroEmpresa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RazonSocial)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RFC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sucursal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEmpleado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Paterno)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Materno)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdViaje)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@*CÓDIGO PARA EL PAGINADOR DE REGISTROS*@
+@if (Model.Resultado.Count() > 0)
+{
+    <span>
+        <strong>@Model.TotalRegistros</strong> registros encontrados
+    </span>
+    <span>&nbsp;|&nbsp;</span>
+    <span>
+        Página <strong>@(Model.PaginaActual)</strong> de 
+        <strong>@Model.TotalPaginas</strong>
+    </span>
+    <span>&nbsp;|&nbsp;</span>
+}
+else
+{
+    <span>No hay resultados para esta búsqueda</span>
+    <span>&nbsp;|&nbsp;</span>
+}
+
+@if (Model.PaginaActual > 1)
+{
+    @Html.ActionLink("<<", "Index", new { pagina = 1 },
+                    new { @class = "btn btn-sm btn-default" })
+    <span></span>
+    @Html.ActionLink("Anterior", "Index", new { pagina = Model.PaginaActual - 1 },
+                    new { @class = "btn btn-sm btn-default" })
+}
+else
+{
+    @Html.ActionLink("<<", "Index", new { pagina = 1 },
+                    new { @class = "btn btn-sm btn-default disabled" })
+    <span></span>
+    @Html.ActionLink("Anterior", "Index", new { pagina = 1 },
+                    new { @class = "btn btn-sm btn-default disabled" })
+}
+<span></span>
+@if (Model.PaginaActual < Model.TotalPaginas)
+{
+    @Html.ActionLink("Siguiente", "Index", new { pagina = Model.PaginaActual + 1 },
+                    new { @class = "btn btn-sm btn-default" })
+    <span></span>
+    @Html.ActionLink(">>", "Index", new { pagina = Model.TotalPaginas },
+                    new { @class = "btn btn-sm btn-default" })
+}
+else
+{
+    @Html.ActionLink("Siguiente", "Index", new { pagina = Model.TotalPaginas - 1 },
+                    new { @class = "btn btn-sm btn-default disabled" })
+    <span></span>
+    @Html.ActionLink(">>", "Index", new { pagina = Model.TotalPaginas },
+                    new { @class = "btn btn-sm btn-default disabled" })
+}
+
+<div>
+    <a asp-action="Home">Regresar al Listado Personas Fisicas</a>
+</div>
